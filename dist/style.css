@@ -1,0 +1,58 @@
+@import url("./reset.css");
+
+:root {
+	--primary: #07aecf;
+	--secondary: #dc9dfb;
+	--background: #ffffff;
+	--accent: #c52707;
+	--text: #0c2201;
+}
+
+body {
+	display: grid;
+	font-family: Verdana, sans-serif;
+	min-height: 100svh;
+	overflow: hidden;
+	background-color: var(--background);
+	color: var(--text);
+	grid-template-rows: 1fr 9fr;
+}
+header {
+	/* border: solid 4px #c52707; */
+	display: flex;
+	justify-content: space-between;
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+header * {
+	align-items: center;
+}
+.logo-container,
+.search-bar,
+.temperature-btn-container {
+	display: flex;
+	flex: 1 1 0px;
+	gap: 1rem;
+}
+.search-bar {
+	justify-content: center;
+}
+.temperature-btn-container {
+	justify-content: flex-end;
+}
+button {
+	height: 2.5rem;
+	width: 4rem;
+	border: solid;
+	border-radius: 12px;
+}
+
+main {
+	/* border: solid 4px red; */
+}
+
+@media (max-width: 720px) {
+	header {
+		flex-direction: column;
+	}
+}
