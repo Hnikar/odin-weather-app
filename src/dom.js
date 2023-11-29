@@ -10,24 +10,36 @@ const DomManipulation = (() => {
 		{ class: ".chanceofrain", dataKey: "chanceofrain" },
 	];
 
-	document
-		.getElementById("search-form")
-		.addEventListener("submit", async function (event) {
-			event.preventDefault();
-			let searchInputValue = document.getElementById("searchInput").value;
-			await setData(searchInputValue);
-		});
+	const searchForm = document.getElementById("search-form");
+	const searchInput = document.getElementById("searchInput");
+
+	const domElements = {};
+	weatherDetailsElements.forEach((element) => {
+		domElements[element.dataKey] = document.querySelector(element.class);
+	});
+
+	searchForm.addEventListener("submit", async function (event) {
+		event.preventDefault();
+		let searchInputValue = searchInput.value;
+		await setData(searchInputValue);
+	});
 
 	let setData = async (inputCity) => {
-		let data = await fetchData(inputCity);
-		if (!data.current) return data;
-		for (const element of weatherDetailsElements) {
-			try {
-				let domElement = document.querySelector(element.class);
-				domElement.textContent = data.current[element.dataKey];
-			} catch (error) {
-				console.log("Error updating element:", error);
-			}
+		try {
+			let data = await fetchData(inputCity);
+			if (!data.current) throw new Error(data);
+			await Promise.all(
+				weatherDetailsElements.map(async (element) => {
+					try {
+						domElements[element.dataKey].textContent =
+							data.current[element.dataKey];
+					} catch (error) {
+						console.log("Error updating element:", error);
+					}
+				})
+			);
+		} catch (error) {
+			console.log(error);
 		}
 	};
 
