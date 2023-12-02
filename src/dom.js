@@ -2,7 +2,7 @@ import fetchData from "./api";
 
 const DomManipulation = (() => {
 	const weatherDetailsElements = [
-		{ class: ".temp", dataKey: "temp_c" },
+		{ class: ".weather-temp", dataKey: "temp_c" },
 		{ class: ".wind", dataKey: "wind_kph" },
 		{ class: ".humidity", dataKey: "humidity" },
 		{ class: ".uvindex", dataKey: "uv" },

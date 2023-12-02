@@ -15,10 +15,9 @@ body {
 	overflow: hidden;
 	background-color: var(--background);
 	color: var(--text);
-	grid-template-rows: 1fr 9fr;
+	grid-template-rows: 1fr 1fr 9fr;
 }
 header {
-	/* border: solid 4px #c52707; */
 	display: flex;
 	justify-content: space-between;
 	padding-left: 1rem;
@@ -27,6 +26,7 @@ header {
 header * {
 	align-items: center;
 }
+
 .logo-container,
 .search-bar,
 .temperature-btn-container {
@@ -34,12 +34,16 @@ header * {
 	flex: 1 1 0px;
 	gap: 1rem;
 }
-.search-bar {
-	justify-content: center;
+
+#search-form {
+	display: flex;
+	gap: 1rem;
 }
+
 .temperature-btn-container {
 	justify-content: flex-end;
 }
+
 button {
 	height: 2.5rem;
 	width: 4rem;
@@ -48,7 +52,32 @@ button {
 }
 
 main {
-	/* border: solid 4px red; */
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	/* justify-content: space-between; */
+}
+
+.weather-now-main {
+	display: flex;
+}
+
+main * {
+	border: solid 2px black;
+}
+
+.weather-now-details {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-rows: 1fr 1fr 1fr;
+}
+
+.weekly-forecast-details > li {
+	display: flex;
+	justify-content: space-between;
+}
+
+ul {
+	list-style-type: none;
 }
 
 @media (max-width: 720px) {
