@@ -2,6 +2,7 @@ import fetchData from "./api";
 
 const DomManipulation = (() => {
 	const weatherDetailsElements = [
+		{ class: ".temp", dataKey: "temp_c" },
 		{ class: ".wind", dataKey: "wind_kph" },
 		{ class: ".humidity", dataKey: "humidity" },
 		{ class: ".uvindex", dataKey: "uv" },
@@ -10,13 +11,28 @@ const DomManipulation = (() => {
 		{ class: ".chanceofrain", dataKey: "chanceofrain" },
 	];
 
+	const farenheitTempBtn = document.getElementById("farenheit-btn");
+	const celsiusTempBtn = document.getElementById("celsius-btn");
+
+	farenheitTempBtn.addEventListener("click", async () => {
+		await _updateTemperatureUnit("temp_f");
+	});
+
+	celsiusTempBtn.addEventListener("click", async () => {
+		await _updateTemperatureUnit("temp_c");
+	});
+
 	const searchForm = document.getElementById("search-form");
 	const searchInput = document.getElementById("searchInput");
 
 	const domElements = {};
-	weatherDetailsElements.forEach((element) => {
-		domElements[element.dataKey] = document.querySelector(element.class);
-	});
+	function _updateDom() {
+		weatherDetailsElements.forEach((element) => {
+			domElements[element.dataKey] = document.querySelector(
+				element.class
+			);
+		});
+	}
 
 	searchForm.addEventListener("submit", async function (event) {
 		event.preventDefault();
@@ -24,8 +40,18 @@ const DomManipulation = (() => {
 		await setData(searchInputValue);
 	});
 
+	let searchInputBuffer;
+	const _updateTemperatureUnit = async (unit) => {
+		weatherDetailsElements[0].dataKey = unit;
+		_updateDom();
+		await setData(searchInputBuffer);
+		console.log("test");
+	};
+
 	let setData = async (inputCity) => {
 		try {
+			_updateDom();
+			searchInputBuffer = inputCity;
 			let data = await fetchData(inputCity);
 			if (!data.current) throw new Error(data);
 			await Promise.all(
