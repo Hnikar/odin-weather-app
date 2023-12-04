@@ -26,7 +26,7 @@ header {
 header * {
 	align-items: center;
 }
-rem .logo-container,
+.logo-container,
 .search-bar,
 .temperature-btn-container {
 	display: flex;
