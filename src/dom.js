@@ -23,7 +23,7 @@ const DomManipulation = (() => {
 	});
 
 	const searchForm = document.getElementById("search-form");
-	const searchInput = document.getElementById("searchInput");
+	const searchInput = document.getElementById("search-input");
 
 	const domElements = {};
 	function _updateDom() {

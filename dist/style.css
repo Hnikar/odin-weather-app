@@ -94,12 +94,11 @@ main {
 	grid-template-columns: 1fr 1fr;
 	padding-left: 4rem;
 	padding-right: 4rem;
-	padding-bottom: 8rem;
 	margin-top: 8rem;
 }
 
 .weather-now-main {
-	display: flex;
+	/* display: flex; */
 }
 
 .weather-temp-container {
@@ -116,6 +115,10 @@ main {
 	display: flex;
 }
 
+/* .weekly-forecast {
+	display: flex;
+	flex-direction: column;
+} */
 .weather-now-details {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
