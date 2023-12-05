@@ -50,6 +50,11 @@ button:focus {
 	border-color: var(--primary);
 }
 
+button:active {
+	background-color: var(--background);
+	color: var(--accent);
+}
+
 button {
 	text-align: center;
 	padding: 10px;
