@@ -142,7 +142,11 @@ ul {
 }
 
 footer {
+	background-color: var(--primary);
+	color: var(--text);
 	text-align: center;
+	padding-top: 0.3rem;
+	font-weight: bold;
 }
 
 img {
