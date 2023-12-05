@@ -1,17 +1,18 @@
 @import url("./reset.css");
 
 :root {
-	--primary: #07aecf;
-	--secondary: #dc9dfb;
-	--background: #ffffff;
-	--accent: #c52707;
-	--text: #0c2201;
+	--primary: #4b262b;
+	--secondary: #1d1011;
+	--background: #070304;
+	--accent: #dbb8bd;
+	--text: #f0e0e3;
 }
 
 body {
 	display: grid;
 	font-family: Verdana, sans-serif;
 	min-height: 100svh;
+	max-height: 100svh;
 	overflow: hidden;
 	background-color: var(--background);
 	color: var(--text);
@@ -34,6 +35,39 @@ header * {
 	gap: 1rem;
 }
 
+#search-input {
+	padding: 10px;
+	border: 2px solid var(--accent);
+	border-radius: 5px;
+	background-color: var(--background);
+	color: var(--text);
+	margin-right: 10px;
+	transition: border-color 0.3s ease;
+}
+
+button:focus {
+	outline: none;
+	border-color: var(--primary);
+}
+
+button {
+	text-align: center;
+	padding: 10px;
+	border: none;
+	border-radius: 5px;
+	background-color: var(--primary);
+	color: var(--text);
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+button:hover {
+	background-color: var(--secondary);
+}
+
+.logo-container > img {
+	width: 4rem;
+}
 #search-form {
 	display: flex;
 	gap: 1rem;
@@ -43,17 +77,11 @@ header * {
 	justify-content: flex-end;
 }
 
-button {
-	height: 2.5rem;
-	width: 4rem;
-	border: solid;
-	border-radius: 12px;
-}
-
 .city-info-container {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	padding-top: 4rem;
 }
 
 main {
@@ -61,8 +89,8 @@ main {
 	grid-template-columns: 1fr 1fr;
 	padding-left: 4rem;
 	padding-right: 4rem;
-	padding-bottom: 16rem;
-	padding-top: 4rem;
+	padding-bottom: 8rem;
+	margin-top: 8rem;
 }
 
 .weather-now-main {
@@ -81,10 +109,6 @@ main {
 
 .weather-main-container {
 	display: flex;
-}
-
-main * {
-	border: solid 2px black;
 }
 
 .weather-now-details {
@@ -114,6 +138,11 @@ ul {
 
 footer {
 	text-align: center;
+}
+
+img {
+	-webkit-filter: invert(0.75);
+	filter: invert(0.75);
 }
 
 @media (max-width: 720px) {

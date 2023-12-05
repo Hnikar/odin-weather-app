@@ -45,7 +45,6 @@ const DomManipulation = (() => {
 		weatherDetailsElements[0].dataKey = unit;
 		_updateDom();
 		await setData(searchInputBuffer);
-		console.log("test");
 	};
 
 	let setData = async (inputCity) => {
@@ -53,6 +52,7 @@ const DomManipulation = (() => {
 			_updateDom();
 			searchInputBuffer = inputCity;
 			let data = await fetchData(inputCity);
+			console.log(data);
 			if (!data.current) throw new Error(data);
 			await Promise.all(
 				weatherDetailsElements.map(async (element) => {
