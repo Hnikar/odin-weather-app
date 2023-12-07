@@ -18,15 +18,18 @@ body {
 	color: var(--text);
 	grid-template-rows: 1fr 1fr 9fr 2rem;
 }
+
 header {
 	display: flex;
 	justify-content: space-between;
 	padding-left: 1rem;
 	padding-right: 1rem;
 }
+
 header * {
 	align-items: center;
 }
+
 .logo-container,
 .search-bar,
 .temperature-btn-container {
@@ -73,6 +76,7 @@ button:hover {
 .logo-container > img {
 	width: 4rem;
 }
+
 #search-form {
 	display: flex;
 	gap: 1rem;
@@ -101,20 +105,45 @@ main {
 .weather-now-main {
 	display: flex;
 	height: 70%;
+	gap: 4rem;
+}
+
+.weather-main-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 }
 
 .weather-temp-container {
 	display: flex;
+	align-items: center;
 }
 
-.weather-main-container {
-	display: flex;
-	align-self: center;
-	flex-direction: column;
+.weather-temp-container img {
+	width: 150px;
+	margin-right: 2rem;
 }
 
-.weather-main-container {
-	display: flex;
+.weather-temp {
+	font-size: 6em;
+	font-weight: bold;
+}
+
+.weather-desc-container {
+	text-align: right;
+}
+
+.weather-desc {
+	font-size: 2em;
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+
+.weather-feels-like,
+.weather-wind-desc {
+	font-size: 1.2em;
+	color: #777;
 }
 
 .weather-now-details {
@@ -140,16 +169,41 @@ main {
 	font-weight: bold;
 }
 
-.weekly-forecast-details {
-	display: flex;
-	flex-direction: column;
-	gap: 2rem;
-	width: 100%;
+.weekly-forecast {
+	margin-top: 20px;
 }
 
-.weekly-forecast-details > li {
+.weekly-forecast-header {
+	font-size: 1.5em;
+	margin-bottom: 10px;
+}
+
+.weekly-forecast-details {
+	list-style: none;
+	padding: 0;
+}
+
+.weekly-forecast-details li {
 	display: flex;
 	justify-content: space-between;
+	border-bottom: 1px solid #ccc;
+	padding: 10px 0;
+}
+
+.weekly-forecast-day {
+	font-size: 1.2em;
+	margin-bottom: 5px;
+}
+
+.weekly-forecast-temp,
+.weekly-forecast-feelslike,
+.weekly-forecast-wind {
+	font-weight: bold;
+	margin-bottom: 3px;
+}
+
+.weekly-forecast-details li div {
+	margin-bottom: 3px;
 }
 
 ul {
