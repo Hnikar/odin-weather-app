@@ -105,7 +105,7 @@ main {
 .weather-now-main {
 	display: flex;
 	height: 70%;
-	gap: 4rem;
+	gap: 8rem;
 }
 
 .weather-main-container {
@@ -115,17 +115,9 @@ main {
 	justify-content: center;
 }
 
-.weather-temp-container {
-	display: flex;
-	align-items: center;
-}
-
-.weather-temp-container img {
-	width: 150px;
-	margin-right: 2rem;
-}
-
 .weather-temp {
+	text-align: end;
+	width: 100%;
 	font-size: 6em;
 	font-weight: bold;
 }
@@ -159,10 +151,6 @@ main {
 	border-radius: 8px;
 	text-align: center;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.weather-now-details h3 {
-	margin-bottom: 10px;
 }
 
 .weather-now-details div {
