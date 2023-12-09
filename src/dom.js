@@ -59,6 +59,10 @@ const DomManipulation = (() => {
 					try {
 						domElements[element.dataKey].textContent =
 							data.current[element.dataKey];
+						if (element.dataKey === "temp_c") {
+							domElements[element.dataKey].textContent += "°C";
+						} else if (element.dataKey === "temp_f")
+							domElements[element.dataKey].textContent += "°F";
 					} catch (error) {
 						console.log("Error updating element:", error);
 					}
