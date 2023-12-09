@@ -3,6 +3,7 @@ import fetchData from "./api";
 const DomManipulation = (() => {
 	const weatherDetailsElements = [
 		{ class: ".weather-temp", dataKey: "temp_c" },
+		{ class: ".weather-desc", dataKey: "condition" },
 		{ class: ".wind", dataKey: "wind_kph" },
 		{ class: ".humidity", dataKey: "humidity" },
 		{ class: ".uvindex", dataKey: "uv" },
@@ -57,11 +58,16 @@ const DomManipulation = (() => {
 			await Promise.all(
 				weatherDetailsElements.map(async (element) => {
 					try {
-						domElements[element.dataKey].textContent =
-							data.current[element.dataKey];
-						if (element.dataKey === "temp_c") {
+						if (element.dataKey === "condition")
+							domElements[element.dataKey].textContent =
+								data.current.condition.text;
+						else
+							domElements[element.dataKey].textContent =
+								data.current[element.dataKey];
+
+						if (element.dataKey === "temp_c")
 							domElements[element.dataKey].textContent += "°C";
-						} else if (element.dataKey === "temp_f")
+						else if (element.dataKey === "temp_f")
 							domElements[element.dataKey].textContent += "°F";
 					} catch (error) {
 						console.log("Error updating element:", error);
