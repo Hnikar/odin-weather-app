@@ -1,10 +1,11 @@
 import fetchData from "./api";
 
 const DomManipulation = (() => {
-	const weatherDetailsElements = [
+	const weatherElementsArr = [
 		{ class: ".weather-temp", dataKey: "temp_c" },
 		{ class: ".weather-desc", dataKey: "condition" },
 		{ class: ".weather-feels-like-anchor", dataKey: "feelslike_c" },
+
 		{ class: ".wind", dataKey: "wind_kph" },
 		{ class: ".humidity", dataKey: "humidity" },
 		{ class: ".uvindex", dataKey: "uv" },
@@ -27,10 +28,10 @@ const DomManipulation = (() => {
 	const searchForm = document.getElementById("search-form");
 	const searchInput = document.getElementById("search-input");
 
-	const domElements = {};
+	const domWeatherElements = {};
 	function _updateDom() {
-		weatherDetailsElements.forEach((element) => {
-			domElements[element.dataKey] = document.querySelector(
+		weatherElementsArr.forEach((element) => {
+			domWeatherElements[element.dataKey] = document.querySelector(
 				element.class
 			);
 		});
@@ -44,11 +45,14 @@ const DomManipulation = (() => {
 
 	let searchInputBuffer;
 	const _updateTemperatureUnit = async (unit, feelslikeUnit) => {
-		weatherDetailsElements[0].dataKey = unit;
-		weatherDetailsElements[2].dataKey = feelslikeUnit;
+		weatherElementsArr[0].dataKey = unit;
+		weatherElementsArr[2].dataKey = feelslikeUnit;
 		_updateDom();
 		await setData(searchInputBuffer);
 	};
+
+	const locationName = document.querySelector(".city-name");
+	const locationDateAndTime = document.querySelector(".date-and-time");
 
 	let setData = async (inputCity) => {
 		try {
@@ -57,26 +61,32 @@ const DomManipulation = (() => {
 			let data = await fetchData(inputCity);
 			console.log(data);
 			if (!data.current) throw new Error(data);
+
+			locationName.textContent = data.location.name;
+			locationDateAndTime.textContent = data.location.localtime;
+
 			await Promise.all(
-				weatherDetailsElements.map(async (element) => {
+				weatherElementsArr.map(async (element) => {
 					try {
 						if (element.dataKey === "condition")
-							domElements[element.dataKey].textContent =
+							domWeatherElements[element.dataKey].textContent =
 								data.current.condition.text;
 						else
-							domElements[element.dataKey].textContent =
+							domWeatherElements[element.dataKey].textContent =
 								data.current[element.dataKey];
 
 						if (
 							element.dataKey === "temp_c" ||
 							element.dataKey === "feelslike_c"
 						)
-							domElements[element.dataKey].textContent += "°C";
+							domWeatherElements[element.dataKey].textContent +=
+								"°C";
 						else if (
 							element.dataKey === "temp_f" ||
 							element.dataKey === "feelslike_f"
 						)
-							domElements[element.dataKey].textContent += "°F";
+							domWeatherElements[element.dataKey].textContent +=
+								"°F";
 					} catch (error) {
 						console.log("Error updating element:", error);
 					}
