@@ -1,7 +1,7 @@
 import fetchData from "./api";
 
 const DomManipulation = (() => {
-	const weatherElementsArr = [
+	const currentWeatherElements = [
 		{ class: ".weather-temp", dataKey: "temp_c" },
 		{ class: ".weather-desc", dataKey: "condition" },
 		{ class: ".weather-feels-like-anchor", dataKey: "feelslike_c" },
@@ -12,6 +12,13 @@ const DomManipulation = (() => {
 		{ class: ".visibility", dataKey: "vis_km" },
 		{ class: ".cloudiness", dataKey: "cloud" },
 		{ class: ".chanceofrain", dataKey: "chanceofrain" },
+	];
+
+	let forecastWeatherElements = [
+		{ class: ".chance-or-rain", dataKey: "condition" },
+		{ class: ".sunrise", dataKey: "temp_c" },
+		{ class: ".sunset", dataKey: "condition" },
+		{ class: ".moon-phase", dataKey: "condition" },
 	];
 
 	const farenheitTempBtn = document.getElementById("farenheit-btn");
@@ -30,7 +37,7 @@ const DomManipulation = (() => {
 
 	const domWeatherElements = {};
 	function _updateDom() {
-		weatherElementsArr.forEach((element) => {
+		currentWeatherElements.forEach((element) => {
 			domWeatherElements[element.dataKey] = document.querySelector(
 				element.class
 			);
@@ -46,8 +53,8 @@ const DomManipulation = (() => {
 
 	let searchInputBuffer;
 	const _updateTemperatureUnit = async (unit, feelslikeUnit) => {
-		weatherElementsArr[0].dataKey = unit;
-		weatherElementsArr[2].dataKey = feelslikeUnit;
+		currentWeatherElements[0].dataKey = unit;
+		currentWeatherElements[2].dataKey = feelslikeUnit;
 		_updateDom();
 		await setData(searchInputBuffer);
 	};
@@ -67,7 +74,7 @@ const DomManipulation = (() => {
 			locationDateAndTime.textContent = data.location.localtime;
 
 			await Promise.all(
-				weatherElementsArr.map(async (element) => {
+				currentWeatherElements.map(async (element) => {
 					try {
 						if (element.dataKey === "condition")
 							domWeatherElements[element.dataKey].textContent =
@@ -93,6 +100,20 @@ const DomManipulation = (() => {
 					}
 				})
 			);
+			// await Promise.all(
+			// 	forecastWeatherElements.map(async (element) => {
+			// 		try {
+			// 			domWeatherElements[element.dataKey].textContent =
+			// 				Math.round(
+			// 					data.forecast.forecastday[0].day[
+			// 						element.dataKey
+			// 					]
+			// 				);
+			// 		} catch (error) {
+			// 			console.log("Error updating element:", error);
+			// 		}
+			// 	})
+			// );
 		} catch (error) {
 			console.log(error);
 		}
