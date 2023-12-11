@@ -41,6 +41,7 @@ const DomManipulation = (() => {
 		event.preventDefault();
 		let searchInputValue = searchInput.value;
 		await setData(searchInputValue);
+		searchForm.reset();
 	});
 
 	let searchInputBuffer;
