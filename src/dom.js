@@ -74,7 +74,7 @@ const DomManipulation = (() => {
 								data.current.condition.text;
 						else
 							domWeatherElements[element.dataKey].textContent =
-								data.current[element.dataKey];
+								Math.round(data.current[element.dataKey]);
 
 						if (
 							element.dataKey === "temp_c" ||
