@@ -11,7 +11,6 @@ const DomManipulation = (() => {
 		{ class: ".uvindex", dataKey: "uv" },
 		{ class: ".visibility", dataKey: "vis_km" },
 		{ class: ".cloudiness", dataKey: "cloud" },
-		{ class: ".chanceofrain", dataKey: "chanceofrain" },
 	];
 
 	let forecastWeatherElements = [
