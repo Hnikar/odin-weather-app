@@ -133,9 +133,14 @@ main {
 }
 
 .weather-feels-like,
+.weather-wind-desc,
+.date-and-time {
+	color: #777;
+}
+
+.weather-feels-like,
 .weather-wind-desc {
 	font-size: 1.2em;
-	color: #777;
 }
 
 .weather-now-details {
