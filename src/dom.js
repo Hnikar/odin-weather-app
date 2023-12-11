@@ -51,7 +51,7 @@ const DomManipulation = (() => {
 		await setData(searchInputBuffer);
 	};
 
-	const locationName = document.querySelector(".city-name");
+	const locationName = document.querySelector(".location-data");
 	const locationDateAndTime = document.querySelector(".date-and-time");
 
 	let setData = async (inputCity) => {
@@ -61,8 +61,8 @@ const DomManipulation = (() => {
 			let data = await fetchData(inputCity);
 			console.log(data);
 			if (!data.current) throw new Error(data);
-
-			locationName.textContent = data.location.name;
+			locationName.textContent =
+				data.location.name + ", " + data.location.country;
 			locationDateAndTime.textContent = data.location.localtime;
 
 			await Promise.all(
