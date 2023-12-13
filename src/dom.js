@@ -67,7 +67,7 @@ const DomManipulation = (() => {
 	const locationDateAndTime = document.querySelector(".date-and-time");
 
 	async function _setCurrentWeather(data) {
-		currentWeatherElements.forEach(async (element) => {
+		currentWeatherElements.map(async (element) => {
 			try {
 				if (element.dataKey === "condition")
 					domWeatherElements[element.dataKey].textContent =
@@ -92,23 +92,23 @@ const DomManipulation = (() => {
 		});
 	}
 
-	async function _setCurrentForecast(data) {
-		forecastWeatherElements.forEach(async (element) => {
+	async function _setForecast(data, day) {
+		forecastWeatherElements.map(async (element) => {
 			try {
 				if (element.dataKey === "daily_chance_of_rain")
 					domWeatherElements[element.dataKey].textContent =
-						data.forecast.forecastday[0].day[element.dataKey] +=
+						data.forecast.forecastday[day].day[element.dataKey] +=
 							"%";
 				else
 					domWeatherElements[element.dataKey].textContent =
-						data.forecast.forecastday[0].astro[element.dataKey];
+						data.forecast.forecastday[day].astro[element.dataKey];
 			} catch (error) {
 				console.log("Error updating forecast element:", error);
 			}
 		});
 	}
 
-	let setData = async (inputCity) => {
+	async function setData(inputCity) {
 		try {
 			_updateDom();
 			searchInputBuffer = inputCity;
@@ -118,12 +118,12 @@ const DomManipulation = (() => {
 			locationName.textContent =
 				data.location.name + ", " + data.location.country;
 			locationDateAndTime.textContent = data.location.localtime;
-			_setCurrentForecast(data);
 			_setCurrentWeather(data);
+			_setForecast(data, 0);
 		} catch (error) {
 			console.log(error);
 		}
-	};
+	}
 
 	return { setData };
 })();
