@@ -13,11 +13,11 @@ const DomManipulation = (() => {
 		{ class: ".cloudiness", dataKey: "cloud" },
 	];
 
-	let forecastWeatherElements = [
-		{ class: ".chance-or-rain", dataKey: "condition" },
-		{ class: ".sunrise", dataKey: "temp_c" },
-		{ class: ".sunset", dataKey: "condition" },
-		{ class: ".moon-phase", dataKey: "condition" },
+	const forecastWeatherElements = [
+		{ class: ".chance-of-rain", dataKey: "daily_chance_of_rain" },
+		{ class: ".sunrise", dataKey: "sunrise" },
+		{ class: ".sunset", dataKey: "sunset" },
+		{ class: ".moon-phase", dataKey: "moon_phase" },
 	];
 
 	const farenheitTempBtn = document.getElementById("farenheit-btn");
@@ -37,6 +37,11 @@ const DomManipulation = (() => {
 	const domWeatherElements = {};
 	function _updateDom() {
 		currentWeatherElements.forEach((element) => {
+			domWeatherElements[element.dataKey] = document.querySelector(
+				element.class
+			);
+		});
+		forecastWeatherElements.forEach((element) => {
 			domWeatherElements[element.dataKey] = document.querySelector(
 				element.class
 			);
@@ -61,6 +66,48 @@ const DomManipulation = (() => {
 	const locationName = document.querySelector(".location-data");
 	const locationDateAndTime = document.querySelector(".date-and-time");
 
+	async function _setCurrentWeather(data) {
+		currentWeatherElements.forEach(async (element) => {
+			try {
+				if (element.dataKey === "condition")
+					domWeatherElements[element.dataKey].textContent =
+						data.current.condition.text;
+				else
+					domWeatherElements[element.dataKey].textContent =
+						Math.round(data.current[element.dataKey]);
+
+				if (
+					element.dataKey === "temp_c" ||
+					element.dataKey === "feelslike_c"
+				)
+					domWeatherElements[element.dataKey].textContent += "°C";
+				else if (
+					element.dataKey === "temp_f" ||
+					element.dataKey === "feelslike_f"
+				)
+					domWeatherElements[element.dataKey].textContent += "°F";
+			} catch (error) {
+				console.log("Error updating current weather element:", error);
+			}
+		});
+	}
+
+	async function _setCurrentForecast(data) {
+		forecastWeatherElements.forEach(async (element) => {
+			try {
+				if (element.dataKey === "daily_chance_of_rain")
+					domWeatherElements[element.dataKey].textContent =
+						data.forecast.forecastday[0].day[element.dataKey] +=
+							"%";
+				else
+					domWeatherElements[element.dataKey].textContent =
+						data.forecast.forecastday[0].astro[element.dataKey];
+			} catch (error) {
+				console.log("Error updating forecast element:", error);
+			}
+		});
+	}
+
 	let setData = async (inputCity) => {
 		try {
 			_updateDom();
@@ -71,48 +118,8 @@ const DomManipulation = (() => {
 			locationName.textContent =
 				data.location.name + ", " + data.location.country;
 			locationDateAndTime.textContent = data.location.localtime;
-
-			await Promise.all(
-				currentWeatherElements.map(async (element) => {
-					try {
-						if (element.dataKey === "condition")
-							domWeatherElements[element.dataKey].textContent =
-								data.current.condition.text;
-						else
-							domWeatherElements[element.dataKey].textContent =
-								Math.round(data.current[element.dataKey]);
-
-						if (
-							element.dataKey === "temp_c" ||
-							element.dataKey === "feelslike_c"
-						)
-							domWeatherElements[element.dataKey].textContent +=
-								"°C";
-						else if (
-							element.dataKey === "temp_f" ||
-							element.dataKey === "feelslike_f"
-						)
-							domWeatherElements[element.dataKey].textContent +=
-								"°F";
-					} catch (error) {
-						console.log("Error updating element:", error);
-					}
-				})
-			);
-			// await Promise.all(
-			// 	forecastWeatherElements.map(async (element) => {
-			// 		try {
-			// 			domWeatherElements[element.dataKey].textContent =
-			// 				Math.round(
-			// 					data.forecast.forecastday[0].day[
-			// 						element.dataKey
-			// 					]
-			// 				);
-			// 		} catch (error) {
-			// 			console.log("Error updating element:", error);
-			// 		}
-			// 	})
-			// );
+			_setCurrentForecast(data);
+			_setCurrentWeather(data);
 		} catch (error) {
 			console.log(error);
 		}
