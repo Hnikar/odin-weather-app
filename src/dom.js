@@ -2,22 +2,40 @@ import fetchData from "./api";
 
 const DomManipulation = (() => {
 	const currentWeatherElements = [
-		{ class: ".weather-temp", dataKey: "temp_c" },
-		{ class: ".weather-desc", dataKey: "condition" },
-		{ class: ".weather-feels-like-anchor", dataKey: "feelslike_c" },
+		{ selector: "weather-temp", dataKey: "temp_c" },
+		{ selector: "weather-desc", dataKey: "condition" },
+		{ selector: "weather-feels-like-anchor", dataKey: "feelslike_c" },
 
-		{ class: ".wind", dataKey: "wind_kph" },
-		{ class: ".humidity", dataKey: "humidity" },
-		{ class: ".uvindex", dataKey: "uv" },
-		{ class: ".visibility", dataKey: "vis_km" },
-		{ class: ".cloudiness", dataKey: "cloud" },
+		{ selector: "wind", dataKey: "wind_kph" },
+		{ selector: "humidity", dataKey: "humidity" },
+		{ selector: "uvindex", dataKey: "uv" },
+		{ selector: "visibility", dataKey: "vis_km" },
+		{ selector: "cloudiness", dataKey: "cloud" },
 	];
 
 	const forecastWeatherElements = [
-		{ class: ".chance-of-rain", dataKey: "daily_chance_of_rain" },
-		{ class: ".sunrise", dataKey: "sunrise" },
-		{ class: ".sunset", dataKey: "sunset" },
-		{ class: ".moon-phase", dataKey: "moon_phase" },
+		[
+			{ selector: "chance-of-rain", dataKey: "daily_chance_of_rain-0" },
+			{ selector: "sunrise", dataKey: "sunrise-0" },
+			{ selector: "sunset", dataKey: "sunset-0" },
+			{ selector: "moon-phase", dataKey: "moon_phase-0" },
+		],
+		[
+			{ selector: "weekly-forecast-temp-1", dataKey: "avgtemp_c-1" },
+			{ selector: "weekly-forecast-wind-1", dataKey: "maxwind_kph-1" },
+			{
+				selector: "weekly-forecast-chance-of-rain-1",
+				dataKey: "daily_chance_of_rain-1",
+			},
+		],
+		[
+			{ selector: "weekly-forecast-temp-2", dataKey: "avgtemp_c-2" },
+			{ selector: "weekly-forecast-wind-2", dataKey: "maxwind_kph-2" },
+			{
+				selector: "weekly-forecast-chance-of-rain-2",
+				dataKey: "daily_chance_of_rain-2",
+			},
+		],
 	];
 
 	const farenheitTempBtn = document.getElementById("farenheit-btn");
@@ -37,14 +55,16 @@ const DomManipulation = (() => {
 	const domWeatherElements = {};
 	function _updateDom() {
 		currentWeatherElements.forEach((element) => {
-			domWeatherElements[element.dataKey] = document.querySelector(
-				element.class
+			domWeatherElements[element.dataKey] = document.getElementById(
+				element.selector
 			);
 		});
-		forecastWeatherElements.forEach((element) => {
-			domWeatherElements[element.dataKey] = document.querySelector(
-				element.class
-			);
+		forecastWeatherElements.forEach((day) => {
+			day.forEach((element) => {
+				domWeatherElements[element.dataKey] = document.getElementById(
+					element.selector
+				);
+			});
 		});
 	}
 
@@ -55,6 +75,7 @@ const DomManipulation = (() => {
 		searchForm.reset();
 	});
 
+	// Дописать для forecast avgtemp_c/f
 	let searchInputBuffer;
 	const _updateTemperatureUnit = async (unit, feelslikeUnit) => {
 		currentWeatherElements[0].dataKey = unit;
@@ -67,7 +88,7 @@ const DomManipulation = (() => {
 	const locationDateAndTime = document.querySelector(".date-and-time");
 
 	async function _setCurrentWeather(data) {
-		currentWeatherElements.map(async (element) => {
+		currentWeatherElements.forEach(async (element) => {
 			try {
 				if (element.dataKey === "condition")
 					domWeatherElements[element.dataKey].textContent =
@@ -92,19 +113,29 @@ const DomManipulation = (() => {
 		});
 	}
 
-	async function _setForecast(data, day) {
-		forecastWeatherElements.map(async (element) => {
-			try {
-				if (element.dataKey === "daily_chance_of_rain")
-					domWeatherElements[element.dataKey].textContent =
-						data.forecast.forecastday[day].day[element.dataKey] +=
-							"%";
-				else
-					domWeatherElements[element.dataKey].textContent =
-						data.forecast.forecastday[day].astro[element.dataKey];
-			} catch (error) {
-				console.log("Error updating forecast element:", error);
-			}
+	async function _setForecast(data) {
+		forecastWeatherElements.forEach((day, dayIndex) => {
+			day.forEach((element) => {
+				try {
+					if (element.dataKey.slice(0, -2) === "daily_chance_of_rain")
+						domWeatherElements[element.dataKey].textContent =
+							data.forecast.forecastday[dayIndex].day[
+								element.dataKey.slice(0, -2)
+							] += "%";
+					else if (dayIndex === 0) {
+						domWeatherElements[element.dataKey].textContent =
+							data.forecast.forecastday[dayIndex].astro[
+								element.dataKey.slice(0, -2)
+							];
+					} else
+						domWeatherElements[element.dataKey].textContent =
+							data.forecast.forecastday[dayIndex].day[
+								element.dataKey.slice(0, -2)
+							];
+				} catch (error) {
+					console.log("Error updating forecast element:", error);
+				}
+			});
 		});
 	}
 
@@ -119,7 +150,7 @@ const DomManipulation = (() => {
 				data.location.name + ", " + data.location.country;
 			locationDateAndTime.textContent = data.location.localtime;
 			_setCurrentWeather(data);
-			_setForecast(data, 0);
+			_setForecast(data);
 		} catch (error) {
 			console.log(error);
 		}
