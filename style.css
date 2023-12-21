@@ -115,7 +115,7 @@ main {
 	justify-content: center;
 }
 
-.weather-temp {
+#weather-temp {
 	text-align: end;
 	width: 100%;
 	font-size: 6em;
@@ -126,15 +126,15 @@ main {
 	text-align: right;
 }
 
-.weather-desc {
+#weather-desc {
 	font-size: 2em;
 	font-weight: bold;
 	margin-bottom: 5px;
 }
 
-.weather-feels-like,
-.weather-wind-desc,
-.date-and-time {
+#weather-feels-like,
+#weather-wind-desc,
+#date-and-time {
 	color: #777;
 }
 
@@ -188,9 +188,9 @@ main {
 	margin-bottom: 5px;
 }
 
-.weekly-forecast-temp,
-.weekly-forecast-feelslike,
-.weekly-forecast-wind {
+#weekly-forecast-temp,
+#weekly-forecast-feelslike,
+#weekly-forecast-wind {
 	font-weight: bold;
 	margin-bottom: 3px;
 }
