@@ -12,7 +12,7 @@ const DomManipulation = (() => {
 		{ selector: "visibility", dataKey: "vis_km" },
 		{ selector: "cloudiness", dataKey: "cloud" },
 	];
-
+	//попробуй убрать slice приколы, тебе нужен один и тот же адресс
 	const forecastWeatherElements = [
 		[
 			{ selector: "chance-of-rain", dataKey: "daily_chance_of_rain-0" },

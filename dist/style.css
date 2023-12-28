@@ -134,7 +134,7 @@ main {
 
 #weather-feels-like,
 #weather-wind-desc,
-#date-and-time {
+.date-and-time {
 	color: #777;
 }
 
@@ -149,7 +149,8 @@ main {
 	gap: 20px;
 }
 
-.weather-now-details li {
+.weather-now-details li,
+.paywalled-li {
 	background-color: var(--primary);
 	color: var(--text);
 	padding: 15px;
@@ -157,7 +158,9 @@ main {
 	text-align: center;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-
+.paywalled-li h3 {
+	width: 100%;
+}
 .weather-now-details div {
 	font-weight: bold;
 }
