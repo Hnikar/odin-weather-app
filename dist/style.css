@@ -95,30 +95,34 @@ button:hover {
 
 main {
 	display: grid;
-	grid-template-columns: 2fr 1fr;
+	grid-template-columns: 1fr 2fr 2fr;
+	grid-template-rows: 1fr;
 	padding-left: 4rem;
 	padding-right: 4rem;
 	margin-top: 8rem;
-	gap: 1rem;
+	gap: 4rem;
+}
+
+main > * {
+	max-height: 80%;
 }
 
 .weather-now-main {
 	display: flex;
-	height: 70%;
 	gap: 8rem;
 }
 
 .weather-main-container {
 	display: flex;
 	flex-direction: column;
-	align-items: center;
+	align-items: flex-end;
 	justify-content: center;
 }
 
 #weather-temp {
 	text-align: end;
 	width: 100%;
-	font-size: 6em;
+	font-size: 8em;
 	font-weight: bold;
 }
 
@@ -140,16 +144,28 @@ main {
 
 .weather-feels-like,
 .weather-wind-desc {
-	font-size: 1.2em;
+	font-size: 1.5em;
+}
+
+.weather-now-details-container {
+	display: flex;
+	/* padding-left: 3rem;
+	padding-right: 3rem; */
+	align-items: center;
+	justify-content: center;
+	height: fit-content;
 }
 
 .weather-now-details {
+	width: 80%;
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-	gap: 20px;
+	gap: 1rem;
 }
-
-.weather-now-details li,
+.weather-now-details > div {
+	aspect-ratio: 1;
+}
+.weather-now-details > div,
 .paywalled-li {
 	background-color: var(--primary);
 	color: var(--text);
@@ -166,20 +182,15 @@ main {
 }
 
 .weekly-forecast {
-	margin-top: 20px;
-}
-
-.weekly-forecast-header {
-	font-size: 1.5em;
-	margin-bottom: 10px;
-}
-
-.weekly-forecast-details {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 	list-style: none;
 	padding: 0;
+	margin: 0;
 }
 
-.weekly-forecast-details li {
+.weekly-forecast li {
 	display: flex;
 	justify-content: space-between;
 	border-bottom: 1px solid #ccc;
@@ -198,7 +209,7 @@ main {
 	margin-bottom: 3px;
 }
 
-.weekly-forecast-details li div {
+.weekly-forecast li div {
 	margin-bottom: 3px;
 }
 
@@ -221,8 +232,13 @@ img {
 	filter: invert(0.75);
 }
 
-@media (max-width: 720px) {
-	header {
+@media (max-width: 1080px) {
+	body {
+		overflow: scroll;
+	}
+	main {
+		display: flex;
 		flex-direction: column;
+		gap: 4rem;
 	}
 }

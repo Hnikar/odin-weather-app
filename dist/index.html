@@ -31,94 +31,99 @@
 			<h3 class="date-and-time">Monday 1 December 2077</h3>
 		</div>
 		<main>
-			<div class="weather-now-main">
-				<div class="weather-main-container">
-					<div id="weather-temp"></div>
-					<div class="weather-desc-container">
-						<div id="weather-desc">Light rain</div>
-						<div class="weather-feels-like">
-							Feels like
-							<a id="weather-feels-like-anchor">-4</a>
+			<div class="weather-main-container">
+				<div id="weather-temp"></div>
+				<div class="weather-desc-container">
+					<div id="weather-desc">Light rain</div>
+					<div class="weather-feels-like">
+						Feels like
+						<a id="weather-feels-like-anchor">-4</a>
+					</div>
+					<div id="weather-wind-desc">Moderate breeze</div>
+				</div>
+			</div>
+			<div class="weather-now-details-container">
+				<div class="weather-now-details">
+					<div>
+						<div class="weather-now-details-heading">Wind</div>
+						<div id="wind">placeholder</div>
+					</div>
+					<div>
+						<div class="weather-now-details-heading">Humidity</div>
+						<div id="humidity">placeholder</div>
+					</div>
+					<div>
+						<div class="weather-now-details-heading">UV index</div>
+						<div id="uvindex">placeholder</div>
+					</div>
+					<div>
+						<div class="weather-now-details-heading">
+							Visibility
 						</div>
-						<div id="weather-wind-desc">Moderate breeze</div>
+						<div id="visibility">placeholder</div>
+					</div>
+					<div>
+						<div class="weather-now-details-heading">
+							Cloudiness
+						</div>
+						<div id="cloudiness">placeholder</div>
+					</div>
+					<div>
+						<div class="weather-now-details-heading">
+							Chance of rain
+						</div>
+						<div id="chance-of-rain">placeholder</div>
+					</div>
+					<div>
+						<div class="weather-now-details-heading">Sunrise</div>
+						<div id="sunrise">placeholder</div>
+					</div>
+					<div>
+						<div class="weather-now-details-heading">Sunset</div>
+						<div id="sunset">placeholder</div>
+					</div>
+					<div>
+						<div class="weather-now-details-heading">
+							Moon Phase
+						</div>
+						<div id="moon-phase">placeholder</div>
 					</div>
 				</div>
-				<ul class="weather-now-details">
-					<li>
-						<div class="weather-now-li-heading">Wind</div>
-						<div id="wind">placeholder</div>
-					</li>
-					<li>
-						<div class="weather-now-li-heading">Humidity</div>
-						<div id="humidity">placeholder</div>
-					</li>
-					<li>
-						<div class="weather-now-li-heading">UV index</div>
-						<div id="uvindex">placeholder</div>
-					</li>
-					<li>
-						<div class="weather-now-li-heading">Visibility</div>
-						<div id="visibility">placeholder</div>
-					</li>
-					<li>
-						<div class="weather-now-li-heading">Cloudiness</div>
-						<div id="cloudiness">placeholder</div>
-					</li>
-					<li>
-						<div class="weather-now-li-heading">Chance of rain</div>
-						<div id="chance-of-rain">placeholder</div>
-					</li>
-					<li>
-						<div class="weather-now-li-heading">Chance of rain</div>
-						<div id="sunrise">placeholder</div>
-					</li>
-					<li>
-						<div class="weather-now-li-heading">Chance of rain</div>
-						<div id="sunset">placeholder</div>
-					</li>
-					<li>
-						<div class="weather-now-li-heading">Chance of rain</div>
-						<div id="moon-phase">placeholder</div>
-					</li>
-				</ul>
 			</div>
 			<!-- Хз надо ли менять id обратно на классы, подумать -->
-			<div class="weekly-forecast">
-				<h2 class="weekly-forecast-header">Weekly Forecast</h2>
-				<ul class="weekly-forecast-details">
-					<li>
-						<h3 id="weekly-forecast-day-1">Monday</h3>
-						<div id="weekly-forecast-temp-1"></div>
-						<div id="weekly-forecast-wind-1"></div>
-						<div id="weekly-forecast-chance-of-rain-1"></div>
-						<div></div>
-						<div></div>
-					</li>
-					<li>
-						<h3 id="weekly-forecast-day-2">Monday</h3>
-						<div id="weekly-forecast-temp-2"></div>
-						<div id="weekly-forecast-wind-2"></div>
-						<div id="weekly-forecast-chance-of-rain-2"></div>
-						<div></div>
-						<div></div>
-					</li>
-					<li class="paywalled-li">
-						<h3>Subscribe for full week forecast!</h3>
-					</li>
-					<li class="paywalled-li">
-						<h3>Subscribe for full week forecast!</h3>
-					</li>
-					<li class="paywalled-li">
-						<h3>Subscribe for full week forecast!</h3>
-					</li>
-					<li class="paywalled-li">
-						<h3>Subscribe for full week forecast!</h3>
-					</li>
-					<li class="paywalled-li">
-						<h3>Subscribe for full week forecast!</h3>
-					</li>
-				</ul>
-			</div>
+			<ul class="weekly-forecast">
+				<li>
+					<h3 id="weekly-forecast-day-1">Monday</h3>
+					<div id="weekly-forecast-temp-1"></div>
+					<div id="weekly-forecast-wind-1"></div>
+					<div id="weekly-forecast-chance-of-rain-1"></div>
+					<div></div>
+					<div></div>
+				</li>
+				<li>
+					<h3 id="weekly-forecast-day-2">Monday</h3>
+					<div id="weekly-forecast-temp-2"></div>
+					<div id="weekly-forecast-wind-2"></div>
+					<div id="weekly-forecast-chance-of-rain-2"></div>
+					<div></div>
+					<div></div>
+				</li>
+				<li class="paywalled-li">
+					<h3>Subscribe for full week forecast!</h3>
+				</li>
+				<li class="paywalled-li">
+					<h3>Subscribe for full week forecast!</h3>
+				</li>
+				<li class="paywalled-li">
+					<h3>Subscribe for full week forecast!</h3>
+				</li>
+				<li class="paywalled-li">
+					<h3>Subscribe for full week forecast!</h3>
+				</li>
+				<li class="paywalled-li">
+					<h3>Subscribe for full week forecast!</h3>
+				</li>
+			</ul>
 		</main>
 		<footer>By Hnikar</footer>
 	</body>
