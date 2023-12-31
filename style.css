@@ -95,21 +95,16 @@ button:hover {
 
 main {
 	display: grid;
-	grid-template-columns: 1fr 2fr 2fr;
+	grid-template-columns: 18rem 1fr 1fr;
 	grid-template-rows: 1fr;
 	padding-left: 4rem;
 	padding-right: 4rem;
 	margin-top: 8rem;
-	gap: 4rem;
+	gap: 2rem;
 }
 
 main > * {
-	max-height: 80%;
-}
-
-.weather-now-main {
-	display: flex;
-	gap: 8rem;
+	max-height: 75%;
 }
 
 .weather-main-container {
@@ -121,9 +116,10 @@ main > * {
 
 #weather-temp {
 	text-align: end;
-	width: 100%;
+	width: 200%;
 	font-size: 8em;
 	font-weight: bold;
+	overflow-x: auto;
 }
 
 .weather-desc-container {
@@ -149,21 +145,20 @@ main > * {
 
 .weather-now-details-container {
 	display: flex;
-	/* padding-left: 3rem;
-	padding-right: 3rem; */
 	align-items: center;
 	justify-content: center;
 	height: fit-content;
 }
 
 .weather-now-details {
-	width: 80%;
+	max-width: 75%;
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	gap: 1rem;
 }
 .weather-now-details > div {
 	aspect-ratio: 1;
+	min-width: 130px;
 }
 .weather-now-details > div,
 .paywalled-li {
@@ -188,6 +183,7 @@ main > * {
 	list-style: none;
 	padding: 0;
 	margin: 0;
+	/* aspect-ratio: 1; */
 }
 
 .weekly-forecast li {
@@ -236,9 +232,23 @@ img {
 	body {
 		overflow: scroll;
 	}
+	header {
+		padding: 1rem;
+	}
 	main {
+		margin: 0;
+		padding: 4rem;
 		display: flex;
 		flex-direction: column;
 		gap: 4rem;
+	}
+	h1 {
+		display: none;
+	}
+	.weather-main-container {
+		align-self: center;
+	}
+	.weather-main-container > * {
+		text-align: center;
 	}
 }
