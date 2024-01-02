@@ -80,6 +80,19 @@ const DomManipulation = (() => {
 	const _updateTemperatureUnit = async (unit, feelslikeUnit) => {
 		currentWeatherElements[0].dataKey = unit;
 		currentWeatherElements[2].dataKey = feelslikeUnit;
+
+		forecastWeatherElements.forEach((day, dayIndex) => {
+			day.forEach((element) => {
+				if (
+					element.dataKey.slice(0, -2) === "avgtemp_c" ||
+					element.dataKey.slice(0, -2) === "avgtemp_f"
+				) {
+					element.dataKey = `avg${unit}-${dayIndex}`;
+					console.log(element.dataKey);
+				}
+			});
+		});
+
 		_updateDom();
 		await setData(searchInputBuffer);
 	};
@@ -122,7 +135,7 @@ const DomManipulation = (() => {
 							data.forecast.forecastday[dayIndex].day[
 								element.dataKey.slice(0, -2)
 							] += "%";
-					else if (dayIndex === 0) {
+					if (dayIndex === 0) {
 						domWeatherElements[element.dataKey].textContent =
 							data.forecast.forecastday[dayIndex].astro[
 								element.dataKey.slice(0, -2)
@@ -132,6 +145,11 @@ const DomManipulation = (() => {
 							data.forecast.forecastday[dayIndex].day[
 								element.dataKey.slice(0, -2)
 							];
+
+					if (element.dataKey.slice(0, -2) === "avgtemp_c")
+						domWeatherElements[element.dataKey].textContent += "°C";
+					else if (element.dataKey.slice(0, -2) === "avgtemp_f")
+						domWeatherElements[element.dataKey].textContent += "°F";
 				} catch (error) {
 					console.log("Error updating forecast element:", error);
 				}
@@ -160,3 +178,5 @@ const DomManipulation = (() => {
 })();
 
 export default DomManipulation;
+
+//add kmph amd mpf difference
