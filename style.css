@@ -95,7 +95,7 @@ button:hover {
 
 main {
 	display: grid;
-	grid-template-columns: 18rem 1fr 1fr;
+	grid-template-columns: 24rem 1fr 0.9fr;
 	grid-template-rows: 1fr;
 	padding-left: 4rem;
 	padding-right: 4rem;
@@ -189,24 +189,17 @@ main > * {
 .weekly-forecast li {
 	display: flex;
 	justify-content: space-between;
-	border-bottom: 1px solid #ccc;
 	padding: 10px 0;
 }
 
 .weekly-forecast-day {
 	font-size: 1.2em;
-	margin-bottom: 5px;
 }
 
 #weekly-forecast-temp,
 #weekly-forecast-feelslike,
 #weekly-forecast-wind {
 	font-weight: bold;
-	margin-bottom: 3px;
-}
-
-.weekly-forecast li div {
-	margin-bottom: 3px;
 }
 
 ul {
@@ -229,9 +222,6 @@ img {
 }
 
 @media (max-width: 1080px) {
-	body {
-		overflow: scroll;
-	}
 	header {
 		padding: 1rem;
 	}
