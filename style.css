@@ -231,6 +231,7 @@ img {
 		display: flex;
 		flex-direction: column;
 		gap: 4rem;
+		overflow-y: scroll;
 	}
 	h1 {
 		display: none;
