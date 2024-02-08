@@ -12,7 +12,7 @@ const DomManipulation = (() => {
     { selector: "visibility", dataKey: "vis_km" },
     { selector: "cloudiness", dataKey: "cloud" },
   ];
-  //попробуй убрать slice приколы, тебе нужен один и тот же адресс
+
   const forecastWeatherElements = [
     [
       { selector: "chance-of-rain", dataKey: "daily_chance_of_rain-0" },
@@ -75,7 +75,6 @@ const DomManipulation = (() => {
     searchForm.reset();
   });
 
-  // Дописать для forecast avgtemp_c/f
   let searchInputBuffer;
   const _updateTemperatureUnit = async (unit, feelslikeUnit) => {
     currentWeatherElements[0].dataKey = unit;
@@ -88,17 +87,47 @@ const DomManipulation = (() => {
           element.dataKey.slice(0, -2) === "avgtemp_f"
         ) {
           element.dataKey = `avg${unit}-${dayIndex}`;
-          console.log(element.dataKey);
         }
       });
     });
 
-    _updateDom();
     await setData(searchInputBuffer);
   };
 
-  const locationName = document.querySelector(".location-data");
-  const locationDateAndTime = document.querySelector(".date-and-time");
+  async function _setUnits() {
+    currentWeatherElements.forEach(async (element) => {
+      try {
+        if (element.dataKey === "temp_c" || element.dataKey === "feelslike_c")
+          domWeatherElements[element.dataKey].textContent += "°C";
+        else if (
+          element.dataKey === "temp_f" ||
+          element.dataKey === "feelslike_f"
+        )
+          domWeatherElements[element.dataKey].textContent += "°F";
+        if (element.dataKey === "uv" || element.dataKey === "humidity")
+          domWeatherElements[element.dataKey].textContent += "%";
+      } catch {
+        console.log("Error updating current weather element:", error);
+      }
+    });
+
+    forecastWeatherElements.forEach((day, dayIndex) => {
+      day.forEach((element) => {
+        try {
+          if (element.dataKey.slice(0, -2) === "avgtemp_c")
+            domWeatherElements[element.dataKey].textContent += "°C";
+          else if (element.dataKey.slice(0, -2) === "avgtemp_f")
+            domWeatherElements[element.dataKey].textContent += "°F";
+
+          if (element.dataKey.slice(0, -2) === "daily_chance_of_rain") {
+            domWeatherElements[element.dataKey].textContent += "%";
+          }
+        } catch (error) {
+          console.log("Error updating forecast element:", error);
+        }
+      });
+    });
+  }
 
   async function _setCurrentWeather(data) {
     currentWeatherElements.forEach(async (element) => {
@@ -110,14 +139,6 @@ const DomManipulation = (() => {
           domWeatherElements[element.dataKey].textContent = Math.round(
             data.current[element.dataKey]
           );
-
-        if (element.dataKey === "temp_c" || element.dataKey === "feelslike_c")
-          domWeatherElements[element.dataKey].textContent += "°C";
-        else if (
-          element.dataKey === "temp_f" ||
-          element.dataKey === "feelslike_f"
-        )
-          domWeatherElements[element.dataKey].textContent += "°F";
       } catch (error) {
         console.log("Error updating current weather element:", error);
       }
@@ -133,28 +154,73 @@ const DomManipulation = (() => {
               data.forecast.forecastday[dayIndex].astro[
                 element.dataKey.slice(0, -2)
               ];
-            if (element.dataKey.slice(0, -2) === "daily_chance_of_rain") {
-              domWeatherElements[element.dataKey].textContent =
-                data.forecast.forecastday[dayIndex].day[
-                  element.dataKey.slice(0, -2)
-                ] += "%";
-            }
           } else
             domWeatherElements[element.dataKey].textContent =
               data.forecast.forecastday[dayIndex].day[
                 element.dataKey.slice(0, -2)
               ];
 
-          if (element.dataKey.slice(0, -2) === "avgtemp_c")
-            domWeatherElements[element.dataKey].textContent += "°C";
-          else if (element.dataKey.slice(0, -2) === "avgtemp_f")
-            domWeatherElements[element.dataKey].textContent += "°F";
+          if (element.dataKey.slice(0, -2) === "daily_chance_of_rain") {
+            domWeatherElements[element.dataKey].textContent =
+              data.forecast.forecastday[dayIndex].day[
+                element.dataKey.slice(0, -2)
+              ];
+          }
         } catch (error) {
           console.log("Error updating forecast element:", error);
         }
       });
     });
   }
+
+  function reformatDateTime(dateTimeStr, dayOfWeekOnly = false) {
+    // Split the date and time parts
+    const [datePart, timePart] = dateTimeStr.split(" ");
+
+    // Create a Date object with the date part
+    const dateObj = new Date(datePart);
+
+    // Extract individual date components
+    const dayOfWeek = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ][dateObj.getDay()];
+    const dayOfMonth = dateObj.getDate();
+    const month = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ][dateObj.getMonth()];
+    const year = dateObj.getFullYear();
+
+    // Reformat the time part
+    const [hours, minutes] = timePart.split(":");
+
+    // Construct the final formatted string
+    if (dayOfWeekOnly) {
+      return dayOfWeek;
+    } else {
+      const formattedDateTime = `${dayOfWeek} ${dayOfMonth} ${month} ${year} | ${hours}:${minutes}`;
+      return formattedDateTime;
+    }
+  }
+
+  const locationName = document.querySelector(".location-data");
+  const locationDateAndTime = document.querySelector(".date-and-time");
 
   async function setData(inputCity) {
     try {
@@ -165,9 +231,13 @@ const DomManipulation = (() => {
       if (!data.current) throw new Error(data);
       locationName.textContent =
         data.location.name + ", " + data.location.country;
-      locationDateAndTime.textContent = data.location.localtime;
+
+      locationDateAndTime.textContent = reformatDateTime(
+        data.location.localtime
+      );
       _setCurrentWeather(data);
       _setForecast(data);
+      _setUnits();
     } catch (error) {
       console.log(error);
     }

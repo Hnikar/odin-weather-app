@@ -99,13 +99,11 @@ main {
 	grid-template-rows: 1fr;
 	padding-left: 4rem;
 	padding-right: 4rem;
-	margin-top: 8rem;
 	gap: 2rem;
+	height: 100%;
+	align-items: center;
 }
 
-main > * {
-	max-height: 75%;
-}
 
 .weather-main-container {
 	display: flex;
@@ -161,7 +159,7 @@ main > * {
 	min-width: 130px;
 }
 .weather-now-details > div,
-.paywalled-li {
+.paywalled-forecast-day {
 	background-color: var(--primary);
 	color: var(--text);
 	padding: 15px;
@@ -169,7 +167,8 @@ main > * {
 	text-align: center;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-.paywalled-li h3 {
+
+.paywalled-forecast h3 {
 	width: 100%;
 }
 .weather-now-details div {
@@ -180,16 +179,21 @@ main > * {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	list-style: none;
-	padding: 0;
-	margin: 0;
-	/* aspect-ratio: 1; */
 }
 
-.weekly-forecast li {
-	display: flex;
-	justify-content: space-between;
+.available-forecast-day {
+	display: grid;
+	width: 100%;
+	grid-auto-flow: column;
+	grid-template-columns: repeat(4, 1fr);
 	padding: 10px 0;
+}
+.available-forecast-day > div{
+	justify-self: center;
+}
+.paywalled-forecast{
+	grid-auto-flow: column;
+	grid-template-columns: 1fr;
 }
 
 .weekly-forecast-day {
@@ -221,7 +225,7 @@ img {
 	filter: invert(0.75);
 }
 
-@media (max-width: 1080px) {
+@media (max-width: 1440px) {
 	header {
 		padding: 1rem;
 	}
