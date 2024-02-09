@@ -42,11 +42,11 @@ const DomManipulation = (() => {
   const celsiusTempBtn = document.getElementById("celsius-btn");
 
   farenheitTempBtn.addEventListener("click", async () => {
-    await _updateTemperatureUnit("temp_f", "feelslike_f");
+    await _updateTemperatureUnit(true);
   });
 
   celsiusTempBtn.addEventListener("click", async () => {
-    await _updateTemperatureUnit("temp_c", "feelslike_c");
+    await _updateTemperatureUnit();
   });
 
   const searchForm = document.getElementById("search-form");
@@ -76,9 +76,21 @@ const DomManipulation = (() => {
   });
 
   let searchInputBuffer;
-  const _updateTemperatureUnit = async (unit, feelslikeUnit) => {
-    currentWeatherElements[0].dataKey = unit;
-    currentWeatherElements[2].dataKey = feelslikeUnit;
+  async function _updateTemperatureUnit(americanUnits = false) {
+    let tempUnit, feelsLikeTempUnit;
+    let speedUnit, forecastSpeedUnit;
+    if (americanUnits) {
+      tempUnit = "temp_f";
+      feelsLikeTempUnit = "feelslike_f";
+      speedUnit = "wind_mph";
+    } else {
+      tempUnit = "temp_c";
+      feelsLikeTempUnit = "feelslike_c";
+      speedUnit = "wind_kph";
+    }
+    currentWeatherElements[0].dataKey = tempUnit;
+    currentWeatherElements[2].dataKey = feelsLikeTempUnit;
+    currentWeatherElements[3].dataKey = speedUnit;
 
     forecastWeatherElements.forEach((day, dayIndex) => {
       day.forEach((element) => {
@@ -86,47 +98,18 @@ const DomManipulation = (() => {
           element.dataKey.slice(0, -2) === "avgtemp_c" ||
           element.dataKey.slice(0, -2) === "avgtemp_f"
         ) {
-          element.dataKey = `avg${unit}-${dayIndex}`;
+          element.dataKey = `avg${tempUnit}-${dayIndex}`;
+        }
+        if (
+          element.dataKey.slice(0, -2) === "maxwind_kph" ||
+          element.dataKey.slice(0, -2) === "maxwind_mph"
+        ) {
+          element.dataKey = `max${speedUnit}-${dayIndex}`;
         }
       });
     });
 
     await setData(searchInputBuffer);
-  };
-
-  async function _setUnits() {
-    currentWeatherElements.forEach(async (element) => {
-      try {
-        if (element.dataKey === "temp_c" || element.dataKey === "feelslike_c")
-          domWeatherElements[element.dataKey].textContent += "°C";
-        else if (
-          element.dataKey === "temp_f" ||
-          element.dataKey === "feelslike_f"
-        )
-          domWeatherElements[element.dataKey].textContent += "°F";
-        if (element.dataKey === "uv" || element.dataKey === "humidity")
-          domWeatherElements[element.dataKey].textContent += "%";
-      } catch {
-        console.log("Error updating current weather element:", error);
-      }
-    });
-
-    forecastWeatherElements.forEach((day, dayIndex) => {
-      day.forEach((element) => {
-        try {
-          if (element.dataKey.slice(0, -2) === "avgtemp_c")
-            domWeatherElements[element.dataKey].textContent += "°C";
-          else if (element.dataKey.slice(0, -2) === "avgtemp_f")
-            domWeatherElements[element.dataKey].textContent += "°F";
-
-          if (element.dataKey.slice(0, -2) === "daily_chance_of_rain") {
-            domWeatherElements[element.dataKey].textContent += "%";
-          }
-        } catch (error) {
-          console.log("Error updating forecast element:", error);
-        }
-      });
-    });
   }
 
   async function _setCurrentWeather(data) {
@@ -173,14 +156,58 @@ const DomManipulation = (() => {
     });
   }
 
+  async function _setUnits() {
+    currentWeatherElements.forEach(async (element) => {
+      try {
+        if (element.dataKey === "temp_c" || element.dataKey === "feelslike_c")
+          domWeatherElements[element.dataKey].textContent += "°C";
+        else if (
+          element.dataKey === "temp_f" ||
+          element.dataKey === "feelslike_f"
+        )
+          domWeatherElements[element.dataKey].textContent += "°F";
+        if (
+          element.dataKey === "uv" ||
+          element.dataKey === "humidity" ||
+          element.dataKey === "cloud"
+        )
+          domWeatherElements[element.dataKey].textContent += "%";
+        if (element.dataKey === "wind_kph" || element.dataKey === "vis_km")
+          domWeatherElements[element.dataKey].textContent += "km/h";
+        else if (element.dataKey === "wind_mph" || element.dataKey === "vis_m")
+          domWeatherElements[element.dataKey].textContent += "m/h";
+      } catch {
+        console.log("Error updating current weather element:", error);
+      }
+    });
+
+    forecastWeatherElements.forEach((day, dayIndex) => {
+      day.forEach((element) => {
+        try {
+          if (element.dataKey.slice(0, -2) === "avgtemp_c")
+            domWeatherElements[element.dataKey].textContent += "°C";
+          else if (element.dataKey.slice(0, -2) === "avgtemp_f")
+            domWeatherElements[element.dataKey].textContent += "°F";
+
+          if (element.dataKey.slice(0, -2) === "daily_chance_of_rain") {
+            domWeatherElements[element.dataKey].textContent += "%";
+          }
+          if (element.dataKey.slice(0, -2) === "maxwind_kph")
+            domWeatherElements[element.dataKey].textContent += "km/h";
+          else if (element.dataKey.slice(0, -2) === "maxwind_mph")
+            domWeatherElements[element.dataKey].textContent += "m/h";
+        } catch (error) {
+          console.log("Error updating forecast element:", error);
+        }
+      });
+    });
+  }
+
   function reformatDateTime(dateTimeStr, dayOfWeekOnly = false) {
-    // Split the date and time parts
     const [datePart, timePart] = dateTimeStr.split(" ");
 
-    // Create a Date object with the date part
     const dateObj = new Date(datePart);
 
-    // Extract individual date components
     const dayOfWeek = [
       "Sunday",
       "Monday",
@@ -207,10 +234,8 @@ const DomManipulation = (() => {
     ][dateObj.getMonth()];
     const year = dateObj.getFullYear();
 
-    // Reformat the time part
     const [hours, minutes] = timePart.split(":");
 
-    // Construct the final formatted string
     if (dayOfWeekOnly) {
       return dayOfWeek;
     } else {
@@ -249,3 +274,4 @@ const DomManipulation = (() => {
 export default DomManipulation;
 
 //add kmph amd mpf difference
+// поменять ан nighly temp
