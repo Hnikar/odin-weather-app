@@ -156,8 +156,8 @@ main {
 }
 .weather-now-details > div {
 	aspect-ratio: 1;
-	min-width: 130px;
-	padding: 5px;
+	min-width: 10rem;
+	padding: 1rem;
 }
 
 .weather-now-details div {
@@ -178,7 +178,7 @@ main {
     align-self: center;
 	text-align: center;
 	justify-content: center;
-	font-size: 1.2rem;
+	font-size: 1.5rem;
 }
 
 
@@ -257,7 +257,7 @@ img {
 	filter: invert(0.75);
 }
 
-@media (max-width: 1440px) {
+@media (max-width: 1640px) {
 	header {
 		padding: 1rem;
 	}
