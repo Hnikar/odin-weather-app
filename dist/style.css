@@ -135,8 +135,7 @@ main {
 	margin-bottom: 5px;
 }
 
-#weather-feels-like,
-#weather-wind-desc,
+.weather-feels-like,
 .date-and-time {
 	color: #777;
 }

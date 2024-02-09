@@ -5,7 +5,6 @@ const DomManipulation = (() => {
     { selector: "weather-temp", dataKey: "temp_c" },
     { selector: "weather-desc", dataKey: "condition" },
     { selector: "weather-feels-like-anchor", dataKey: "feelslike_c" },
-
     { selector: "wind", dataKey: "wind_kph" },
     { selector: "humidity", dataKey: "humidity" },
     { selector: "uvindex", dataKey: "uv" },
@@ -258,7 +257,7 @@ const DomManipulation = (() => {
     }
   }
 
-  async function _bruh(data) {
+  async function _setDateTime(data) {
     const locationName = document.querySelector(".location-data");
     const locationDateAndTime = document.querySelector(".date-and-time");
 
@@ -285,7 +284,7 @@ const DomManipulation = (() => {
       let data = await fetchData(inputCity);
       console.log(data);
       if (!data.current) throw new Error(data);
-      _bruh(data);
+      _setDateTime(data);
       _setCurrentWeather(data);
       _setForecast(data);
       _setUnits();
