@@ -78,19 +78,23 @@ const DomManipulation = (() => {
   let searchInputBuffer;
   async function _updateTemperatureUnit(americanUnits = false) {
     let tempUnit, feelsLikeTempUnit;
-    let speedUnit, forecastSpeedUnit;
+    let speedUnit;
+    let visUnit;
     if (americanUnits) {
       tempUnit = "temp_f";
       feelsLikeTempUnit = "feelslike_f";
       speedUnit = "wind_mph";
+      visUnit = "vis_miles";
     } else {
       tempUnit = "temp_c";
       feelsLikeTempUnit = "feelslike_c";
       speedUnit = "wind_kph";
+      visUnit = "vis_km";
     }
     currentWeatherElements[0].dataKey = tempUnit;
     currentWeatherElements[2].dataKey = feelsLikeTempUnit;
     currentWeatherElements[3].dataKey = speedUnit;
+    currentWeatherElements[6].dataKey = visUnit;
 
     forecastWeatherElements.forEach((day, dayIndex) => {
       day.forEach((element) => {
@@ -172,9 +176,14 @@ const DomManipulation = (() => {
           element.dataKey === "cloud"
         )
           domWeatherElements[element.dataKey].textContent += "%";
-        if (element.dataKey === "wind_kph" || element.dataKey === "vis_km")
+        if (element.dataKey === "vis_km")
+          domWeatherElements[element.dataKey].textContent += "km";
+        else if (element.dataKey === "vis_miles")
+          domWeatherElements[element.dataKey].textContent += "m";
+
+        if (element.dataKey === "wind_kph")
           domWeatherElements[element.dataKey].textContent += "km/h";
-        else if (element.dataKey === "wind_mph" || element.dataKey === "vis_m")
+        else if (element.dataKey === "wind_mph")
           domWeatherElements[element.dataKey].textContent += "m/h";
       } catch {
         console.log("Error updating current weather element:", error);
