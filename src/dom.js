@@ -234,7 +234,12 @@ const DomManipulation = (() => {
     ][dateObj.getMonth()];
     const year = dateObj.getFullYear();
 
-    const [hours, minutes] = timePart.split(":");
+    let hours = "";
+    let minutes = "";
+
+    if (timePart) {
+      [hours, minutes] = timePart.split(":");
+    }
 
     if (dayOfWeekOnly) {
       return dayOfWeek;
@@ -244,9 +249,26 @@ const DomManipulation = (() => {
     }
   }
 
-  const locationName = document.querySelector(".location-data");
-  const locationDateAndTime = document.querySelector(".date-and-time");
+  async function _bruh(data) {
+    const locationName = document.querySelector(".location-data");
+    const locationDateAndTime = document.querySelector(".date-and-time");
 
+    locationName.textContent =
+      data.location.name + ", " + data.location.country;
+
+    locationDateAndTime.textContent = reformatDateTime(data.location.localtime);
+
+    const forecastDayList = [
+      document.getElementById("weekly-forecast-day-1"),
+      document.getElementById("weekly-forecast-day-2"),
+    ];
+    forecastDayList.forEach((day, index) => {
+      day.textContent = reformatDateTime(
+        data.forecast.forecastday[(index += 1)].date,
+        true
+      );
+    });
+  }
   async function setData(inputCity) {
     try {
       _updateDom();
@@ -254,12 +276,7 @@ const DomManipulation = (() => {
       let data = await fetchData(inputCity);
       console.log(data);
       if (!data.current) throw new Error(data);
-      locationName.textContent =
-        data.location.name + ", " + data.location.country;
-
-      locationDateAndTime.textContent = reformatDateTime(
-        data.location.localtime
-      );
+      _bruh(data);
       _setCurrentWeather(data);
       _setForecast(data);
       _setUnits();
@@ -272,6 +289,3 @@ const DomManipulation = (() => {
 })();
 
 export default DomManipulation;
-
-//add kmph amd mpf difference
-// поменять ан nighly temp
