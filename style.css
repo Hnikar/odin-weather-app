@@ -18,7 +18,7 @@ body {
 	font-family: Verdana, sans-serif;
 	min-height: 100svh;
 	max-height: 100svh;
-	overflow: scroll;
+	overflow: hidden;
 	background-color: var(--background);
 	color: var(--text);
 	grid-template-rows: 1fr 1fr 9fr 2rem;
@@ -312,6 +312,9 @@ h2 {
 
 
 @media (max-width: 1640px) {
+	body{
+		overflow-y: scroll;
+	}
 	main > * {
 		align-items: center;
 	}
