@@ -114,7 +114,6 @@ main {
 
 #weather-temp {
 	text-align: end;
-	width: 200%;
 	font-size: 8em;
 	font-weight: bold;
 	overflow-x: auto;
@@ -258,6 +257,9 @@ img {
 }
 
 @media (max-width: 1640px) {
+	main > *{
+		align-items: center;
+	}
 	header {
 		padding: 1rem;
 	}
@@ -273,9 +275,19 @@ img {
 		display: none;
 	}
 	.weather-main-container {
-		align-self: center;
+		align-items: center;
 	}
 	.weather-main-container > * {
 		text-align: center;
+		align-items: center;
+	}
+	.weather-now-details{
+		width: 42rem;
+	}
+	.weekly-forecast {
+		gap: 1rem
+	}
+	.weekly-forecast > li{
+		width: 32.5rem;
 	}
 }
