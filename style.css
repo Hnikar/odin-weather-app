@@ -1,4 +1,7 @@
+/* Import */
 @import url("./reset.css");
+
+
 
 :root {
 	--primary: #4b262b;
@@ -7,6 +10,8 @@
 	--accent: #dbb8bd;
 	--text: #f0e0e3;
 }
+
+
 
 body {
 	display: grid;
@@ -48,16 +53,6 @@ header * {
 	transition: border-color 0.3s ease;
 }
 
-button:focus {
-	outline: none;
-	border-color: var(--primary);
-}
-
-button:active {
-	background-color: var(--background);
-	color: var(--accent);
-}
-
 button {
 	text-align: center;
 	padding: 10px;
@@ -67,6 +62,16 @@ button {
 	color: var(--text);
 	cursor: pointer;
 	transition: background-color 0.3s ease;
+}
+
+button:focus {
+	outline: none;
+	border-color: var(--primary);
+}
+
+button:active {
+	background-color: var(--background);
+	color: var(--accent);
 }
 
 button:hover {
@@ -103,6 +108,7 @@ main {
 	height: 100%;
 	align-items: center;
 }
+
 
 
 .weather-main-container {
@@ -153,6 +159,7 @@ main {
 	grid-template-columns: repeat(3, 1fr);
 	gap: 1rem;
 }
+
 .weather-now-details > div {
 	aspect-ratio: 1;
 	min-width: 10rem;
@@ -162,22 +169,21 @@ main {
 .weather-now-details div {
 	display: flex;
 	flex-direction: column;
-	
 }
 
-.weather-now-details-heading{
+.weather-now-details-heading {
 	color: #b1b1b1;
 }
 
-.weather-now-details-data{
+.weather-now-details-data {
 	font-weight: bold;
 	position: relative;
 	bottom: 0.5rem;
 	flex: 1;
-    align-self: center;
+	align-self: center;
 	text-align: center;
 	justify-content: center;
-	font-size: 1.5rem;
+	font-size: 1.75rem;
 }
 
 
@@ -197,27 +203,28 @@ main {
 	padding: 15px;	
 }
 
-.available-forecast-day > div{
+.available-forecast-day > div {
 	justify-self: center;
 }
 
-.paywalled-forecast{
+.paywalled-forecast {
 	grid-auto-flow: column;
 	grid-template-columns: 1fr;
+
 }
 
-.paywalled-forecast-day{
+.paywalled-forecast-day {
 	padding: 15px;
 	background-color: #3a2729;
-} 
+	border: #3a2729 solid;
+	border-radius: 8px;
+}
+
+
 
 .weather-now-details > div,
-.available-forecast-day{
+.available-forecast-day {
 	background-color: var(--primary);
-}
-.weather-now-details > div,
-.paywalled-forecast-day,
-.available-forecast-day{
 	color: var(--text);
 	border-radius: 8px;
 	text-align: center;
@@ -227,6 +234,7 @@ main {
 .paywalled-forecast h3 {
 	width: 100%;
 }
+
 .weekly-forecast-day {
 	font-size: 1.2em;
 }
@@ -252,12 +260,18 @@ footer {
 }
 
 img {
-	-webkit-filter: invert(0.75);
-	filter: invert(0.75);
+	-webkit-filter: invert(1);
+	filter: invert(1);
 }
 
+h2 {
+	font-size: 2rem;
+}
+
+
+
 @media (max-width: 1640px) {
-	main > *{
+	main > * {
 		align-items: center;
 	}
 	header {
@@ -281,13 +295,13 @@ img {
 		text-align: center;
 		align-items: center;
 	}
-	.weather-now-details{
+	.weather-now-details {
 		width: 42rem;
 	}
 	.weekly-forecast {
-		gap: 1rem
+		gap: 1rem;
 	}
-	.weekly-forecast > li{
+	.weekly-forecast > li {
 		width: 32.5rem;
 	}
 }
