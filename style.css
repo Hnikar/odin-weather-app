@@ -157,12 +157,69 @@ main {
 .weather-now-details > div {
 	aspect-ratio: 1;
 	min-width: 130px;
+	padding: 5px;
+}
+
+.weather-now-details div {
+	display: flex;
+	flex-direction: column;
+	
+}
+
+.weather-now-details-heading{
+	color: #b1b1b1;
+}
+
+.weather-now-details-data{
+	font-weight: bold;
+	position: relative;
+	bottom: 0.5rem;
+	flex: 1;
+    align-self: center;
+	text-align: center;
+	justify-content: center;
+	font-size: 1.2rem;
+}
+
+
+
+.weekly-forecast {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 32rem;
+}
+
+.available-forecast-day {
+	display: grid;
+	width: 100%;
+	grid-auto-flow: column;
+	grid-template-columns: repeat(4, 1fr);
+	padding: 15px;	
+}
+
+.available-forecast-day > div{
+	justify-self: center;
+}
+
+.paywalled-forecast{
+	grid-auto-flow: column;
+	grid-template-columns: 1fr;
+}
+
+.paywalled-forecast-day{
+	padding: 15px;
+	background-color: #3a2729;
+} 
+
+.weather-now-details > div,
+.available-forecast-day{
+	background-color: var(--primary);
 }
 .weather-now-details > div,
-.paywalled-forecast-day {
-	background-color: var(--primary);
+.paywalled-forecast-day,
+.available-forecast-day{
 	color: var(--text);
-	padding: 15px;
 	border-radius: 8px;
 	text-align: center;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -171,31 +228,6 @@ main {
 .paywalled-forecast h3 {
 	width: 100%;
 }
-.weather-now-details div {
-	font-weight: bold;
-}
-
-.weekly-forecast {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-}
-
-.available-forecast-day {
-	display: grid;
-	width: 100%;
-	grid-auto-flow: column;
-	grid-template-columns: repeat(4, 1fr);
-	padding: 10px 0;
-}
-.available-forecast-day > div{
-	justify-self: center;
-}
-.paywalled-forecast{
-	grid-auto-flow: column;
-	grid-template-columns: 1fr;
-}
-
 .weekly-forecast-day {
 	font-size: 1.2em;
 }
